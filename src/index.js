@@ -6,7 +6,8 @@ const app = express();
 const ticketController = require("./controllers/ticket-controller");
 const job = require("./util/job");
 const cron = require("node-cron");
-const prepareAndStartServer = () => {
+const { createChannel, subscribeMessage } = require("./util/messageQueue");
+const prepareAndStartServer = async () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.post("/api/v1/tickets", ticketController.createTicketController);

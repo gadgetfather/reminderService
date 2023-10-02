@@ -10,16 +10,17 @@ const setupJobs = async () => {
   // console.log("cron", cron);
   cron.schedule("*/1 * * * *", async () => {
     console.log("running a task every minute");
-    const pendingEmails = await fetchPendingTickets();
-    pendingEmails.forEach((email) => {
-      console.log("email", email.dataValues);
-      sendBasicEmail(
-        "notif@gmail.com",
-        email.dataValues.recipientEmail,
-        email.dataValues.subject,
-        email.dataValues.content
-      );
-    });
+    // const pendingEmails = await fetchPendingTickets();
+    //to send emails
+    // pendingEmails.forEach((email) => {
+    //   console.log("email", email.dataValues);
+    //   sendBasicEmail(
+    //     "notif@gmail.com",
+    //     email.dataValues.recipientEmail,
+    //     email.dataValues.subject,
+    //     email.dataValues.content
+    //   );
+    // });
   });
 };
 
