@@ -1,18 +1,22 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const { PORT } = require("./config/serverConfig");
-const cron = require("node-cron");
+const db = require("./models");
 const app = express();
-const { sendBasicEmail } = require("./services/email-service");
+const ticketController = require("./controllers/ticket-controller");
+const job = require("./util/job");
+const cron = require("node-cron");
 const prepareAndStartServer = () => {
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.post("/api/v1/tickets", ticketController.createTicketController);
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
-
-    sendBasicEmail(
-      "support@noti.com",
-      "kamblea635@gmail.com",
-      "This is testing email",
-      "This is testing email body"
-    );
+    // db.sequelize.sync({ force: true });
+    // cron.schedule("*/1 * * * *", () => {
+    //   console.log("running a task every two minutes");
+    // });
+    job();
   });
 };
 
